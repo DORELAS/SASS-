@@ -1,0 +1,81 @@
+#grid > div {
+    height: 25px;
+    background-color: #ccc;
+    border: 1px solid #aaa;
+    box-sizing: border-box;
+    float: left;
+}
+$max: 16;
+
+@for $i from 1 through $max {
+    $equ: 100% / $i;
+
+    #grid.cell-#{$i} > div {
+        width: $equ;
+    }   
+}  
+
+$map: ( 850:12, 450:8, 380:3 );
+
+@each $key, $val in $map {
+    @media all and (max-width: $key + px) {
+
+        @for $i from 1 through $val {
+            $equ: 100% / $i;
+        
+            #grid.cell-#{$key}-#{$i} > div {
+                width: $equ;
+            }   
+        
+    }
+    
+    }
+}
+
+
+.Button {
+    display: inline-block;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 200;
+    background-color: #ccc;
+    color: #222;
+    padding: 10px 15px;
+    border-radius: 3px;
+    transition: all .2px;
+}
+
+.Button:hover {
+    background: #bbb;
+}
+
+$colormap: (
+   green:(  background: #86c351,
+            hover:#78b04a
+         ),
+
+   blue: (  background: #00b3e0,
+            hover:#0097be
+         ),
+
+   red:  (  background: #ff5817,
+            hover:#da4912
+         )
+);
+
+@each $color, $innermap in $colormap {
+
+    @each $property, $value in $innermap {
+        @if ($property == 'background'){
+            .Button.#{$color} {
+                background: $value;
+                color: #fff;
+            }
+        } @else {
+            .Button.#{$color}:hover {
+               background: $value;
+            }
+        }
+     }  
+}
